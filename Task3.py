@@ -86,8 +86,8 @@ def next(grid, x, y):
 
 def value(grid, x, y, n_rows, n_cols):
     n = n_rows*n_cols
-    i, j = x // n_cols, y // n_rows
-    M = [grid[i * n_cols + r][j * n_rows + c] for r in range(n_cols) for c in range(n_rows)]
+    i, j = x // n_rows, y // n_cols
+    M = [grid[i * n_rows + r][j * n_cols + c] for r in range(n_rows) for c in range(n_cols)]
     v = set([x for x in range(1, n + 1)]) - set(M) - set(grid[x]) - set(list(zip(*grid))[y])
 
     return list(v)
