@@ -145,6 +145,7 @@ def next(grid, x, y):
     return -1, -1
 
 def order_empty(grids, n_rows, n_cols):
+    '''This function is used to order empties rely on its number of possible values from low to high'''
     order = ()
     min_options = float('inf')
 
@@ -161,6 +162,7 @@ def order_empty(grids, n_rows, n_cols):
 
 
 def value(grid, x, y, n_rows, n_cols):
+    '''This function is used to find all possible values as a list for a empty in the grid'''
     n = len(grid)
     i, j = x // n_cols, y // n_rows
     M = [grid[i * n_cols + r][j * n_rows + c] for r in range(n_cols) for c in range(n_rows)]
@@ -169,6 +171,12 @@ def value(grid, x, y, n_rows, n_cols):
     return list(v)
 
 def recursive_solve_task_3(grid, explanation, hints, n_rows, n_cols, hint, explain):
+    '''
+	This function uses recursion to exhaustively search all possible solutions to a grid
+	until the solution is found
+	args: grid, cell_x, cell_y, explanation, hints, n_rows, n_cols, hint,explain
+	return: A solved grid (as a nested list), explanation or None
+	'''
     if hints[0] == hint:
         return True
     # Find an empty place in the grid
@@ -215,13 +223,15 @@ def sudoku(grid, explanation, hints, n_rows, n_cols, hint, explain):
     return grid, explanation
 
 def read_grid_from_file(input_file):
-    with open(input_file, 'r') as file:
+    '''This function is used to convert a grid in input file into a list with several sub-lists'''
+    with open(input_file, 'r') as file: #open input file in read type
         lines = file.readlines()
         grid = [[int(num) for num in line.strip().split(',')] for line in lines]
     return grid
 
 def write_grid_to_file(grid, output_file):
-    with open(output_file, 'w') as file:
+     '''This function is used to convert our solution (a list) of this grid into a grid and save it in output file'''
+    with open(output_file, 'w') as file: #open output file in write type
         for row in grid:
             file.write(' '.join(str(num) for num in row) + '\n')
 
@@ -241,6 +251,10 @@ def determine_grid_size(grid):
     return n_rows, n_cols
 
 def difficulty(grid, n_rows, n_cols):
+    '''
+    This function is used to find difficulty of a grid by 
+    difficulty = number of empty / total number of places in the grid
+    '''
     number = 0
     for i in range(len(grid)):
         for j in range (len(grid[i])):
@@ -263,12 +277,14 @@ def main():
     Ttime = []
     difficulties = []
     average_time = []
-
+    # If the "--file" flag has been used, the program should not solve any grids except the one given by the
+	# input argument.
     if args.file:
         input_file, output_file = args.file
         grid = read_grid_from_file(input_file)
         n_rows, n_cols = determine_grid_size(grid)
-        output = True
+        output = True  
+    # else if the "--file" is not present, solve all the grids given by the 'grids' list at the start of the program.
     else:
         if not args.profile:
             points = 0
@@ -287,7 +303,7 @@ def main():
                     points = points + 10
                 else:
                     print("grid %d incorrect" % (i + 1))  # modify it could fit 3 by 3 soduku'''
-
+                # only use explain flag
                 if args.explain:
                     print('explain:')
 
@@ -295,6 +311,8 @@ def main():
                         print(each_step)
             print("====================================")
             print("Test script complete, Total points: %d" % points)
+        #if the "--profile" flag is been used, the program will show 
+	    #the plot (Average time (s) / Difficulty) and the average solving time
         if args.profile:
             points = 0
             for (i, (grid)) in enumerate(grids):
@@ -309,6 +327,7 @@ def main():
                 # run the recursive solving program 5 times and get the average solving time
                 while num_attempts <= 4:
                     start_time = time.time()
+                    # Create a copy of the 'grid' list and use that for the function.
                     solution = solve(copy.deepcopy(grid), n_rows, n_cols, args.explain, args.hint)
                     elapsed_time = time.time() - start_time
                     Ttime.append(elapsed_time)
@@ -316,6 +335,7 @@ def main():
                 ave_time = sum(Ttime) / len(Ttime)
                 average_time.append(ave_time)
                 start_time = time.time()
+                # Create a copy of the 'grid' list and use that for the function.
                 solution, explanation = solve(copy.deepcopy(grid), n_rows, n_cols, args.explain, args.hint)
                 ave_time = time.time() - start_time
 
@@ -337,13 +357,14 @@ def main():
             plt.scatter(difficulties, average_time)
 
             # Set title and axis labels
+            # Plot points in time vs difficulty and a best fit line
             plt.title('Difficulty vs. Average Time')
             plt.plot(difficulties, slope * np.array(difficulties) + intercept, label='Best fit line')
             plt.xlabel('difficulties')
             plt.ylabel('average_time (s)')
             plt.legend()
             plt.show()
-
+    # The output file path argument in the flags will always be the argument two indexes after the "--file" flag.
     if output:
         start_time = time.time()
         solved_grid, explanation = solve(grid, n_rows, n_cols, args.explain, args.hint)
@@ -351,7 +372,8 @@ def main():
         print(f"Solved grid {input_file}:\n", solved_grid)
         print("Solved in %f seconds" % elapsed_time)
         write_grid_to_file(solved_grid, output_file)
-
+        # If both --explain and --file have been used, the instructions generated by --explain must be put in the
+		# output file, as well as being output to the screen.
         if args.explain:
             print('explain:')
             for each_step in explanation:
@@ -363,6 +385,6 @@ def main():
 
 
 if __name__ == "__main__":
-       main()
+    main()
        
       
