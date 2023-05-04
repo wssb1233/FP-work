@@ -13,7 +13,7 @@ grid1 = [[0,0,3,4,5,6],
          [5,6,1,0,3,4],
          [3,4,5,6,1,0],
          [6,1,0,3,4,5]]
-# 测试用数独，随便写的
+
 
 def solve(grid, n_rows, n_cols, explain=False, hint=0):
     explanation = []
