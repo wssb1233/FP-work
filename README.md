@@ -31,3 +31,5 @@ time spended vs difficulty
 will be plotted which includes several points ( dependent on numbers of your sudoku) and a best fit line.
 
 If you do not give any flag, our code will automatically solve all you sudoku and gives time for each solving.
+
+File Task 2 should not be run.
