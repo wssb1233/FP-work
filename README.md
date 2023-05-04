@@ -13,7 +13,7 @@ Make sure your route of terminal is correct and keep same with files above.
 
 You can use 'cd' in terminal to change your route and 'pwd' to check your current route.
 
-When you try to run my file, there's a structure: 'python --Task1.py --file 'input.txt' 'output.txt' --hint N --explain'
+When you try to run my file, there's a structure: 'python Task1.py --file 'input.txt' 'output.txt' --hint N --explain'
 
 Arguments start with '--' are flags. 'input.txt' is your sudoku file and should into a '', as well as 'output.txt'. 
 
