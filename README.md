@@ -2,7 +2,8 @@
 This is a README file, please read it before you use any other file.
 Both Task1 and 3 can run from terminal
 
-really important:
+REALLY IMPORTANT:
+
 You should go into both Task1.py, Task3.py, copy your sudoku into my file (at the top just after 'import') in correct structure 
 And modify a list named 'grids' which only include name of your sudoku, 'grids' should follow your sudoku at the top.
 
