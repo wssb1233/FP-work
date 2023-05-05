@@ -230,10 +230,12 @@ def read_grid_from_file(input_file):
     return grid
 
 def write_grid_to_file(grid, output_file):
-     '''This function is used to convert our solution (a list) of this grid into a grid and save it in output file'''
-    with open(output_file, 'w') as file: #open output file in write type
+    '''This function is used to convert our solution (a list) of this grid into a grid and save it in output file'''
+#open output file in write type
+    with open(output_file, 'w') as file:
         for row in grid:
             file.write(' '.join(str(num) for num in row) + '\n')
+
 
 def determine_grid_size(grid):
     n = len(grid)
